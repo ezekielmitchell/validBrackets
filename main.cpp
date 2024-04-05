@@ -8,13 +8,12 @@ April 04, 2024
 #include <iostream>
 #include <cassert>
 #include <stack>
-
-#define NDEBUG
+#include <cstdlib>
 
 using namespace std;
 
 bool hasValidBrackets( string expr );
-void testValidBrackets();
+int testValidBrackets();
 
 int main() {
     testValidBrackets();
@@ -34,15 +33,31 @@ bool hasValidBrackets( string expr ) { // check for balanced brackets in an expr
             return false;
         }
     }
+
+    if (!st.empty()) {
+        return false;
+    }
+
+
     return true;
-    
 }
 
-void testValidBrackets() {
-    assert(hasValidBrackets("[()]{}{[()()]()}") == true);
-    assert(hasValidBrackets("[()(}") == false);
+int testValidBrackets() {
+    
+#ifdef NDEBUG
+    std::cerr << "Tests run with NDEBUG defined (asserts compiled out)";
+    std::abort();
+#endif
+
     assert(hasValidBrackets("[()]{}{[]()}") == true);
-    assert(hasValidBrackets("[{((}") == false);
     assert(hasValidBrackets("[]{}{[()()]}") == true);
-    assert(hasValidBrackets("()(}") == false);
+    assert(hasValidBrackets("{[{}]([]{}())}") == true);
+    assert(hasValidBrackets("[[]{}{[([]){}([[{{}}]])]}]") == true);
+    assert(hasValidBrackets("((") == false);
+    assert(hasValidBrackets("[()(}") == false);
+    assert(hasValidBrackets("((()(}") == false);
+//    assert(hasValidBrackets("[{((}}}") == true); // purposely failed test
+    assert(hasValidBrackets("[()]{}{[()()]()") == false);
+
+    return 0;
 }
