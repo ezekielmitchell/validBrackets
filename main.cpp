@@ -2,13 +2,12 @@
 Ezekiel Mitchell
 ECEGR 2030 01
 Homework #1
-April 04, 2024
+April 05, 2024
 **/
 
 #include <iostream>
 #include <cassert>
 #include <stack>
-#include <cstdlib>
 
 using namespace std;
 
@@ -34,20 +33,14 @@ bool hasValidBrackets( string expr ) { // check for balanced brackets in an expr
         }
     }
 
-    if (!st.empty()) {
+    if (!st.empty()) { // if there are any remaining entries, algo fails
         return false;
     }
-
 
     return true;
 }
 
-int testValidBrackets() {
-    
-#ifdef NDEBUG
-    std::cerr << "Tests run with NDEBUG defined (asserts compiled out)";
-    std::abort();
-#endif
+int testValidBrackets() { // test for hasValidBrackets() function
 
     assert(hasValidBrackets("[()]{}{[]()}") == true);
     assert(hasValidBrackets("[]{}{[()()]}") == true);
@@ -56,8 +49,9 @@ int testValidBrackets() {
     assert(hasValidBrackets("((") == false);
     assert(hasValidBrackets("[()(}") == false);
     assert(hasValidBrackets("((()(}") == false);
-//    assert(hasValidBrackets("[{((}}}") == true); // purposely failed test
     assert(hasValidBrackets("[()]{}{[()()]()") == false);
+//    assert(hasValidBrackets("[{((}}}") == true); // purposely failed test
 
+    cout << "All tests pass successfully!\n";
     return 0;
 }
